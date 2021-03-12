@@ -1,0 +1,56 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: "com.jfrog.artifactory"
+apply plugin: "maven-publish"
+
+
+def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
+def GROUP_ID = "com.j1ang.plugin"
+def ARTIFACT_ID = "com.j1ang.plugin.publishApp"
+def VERSION_NAME = "0.0.1"
+
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    //这里根据插件需要，添加对应的依赖
+    implementation 'com.android.tools.build:gradle:4.1.1'
+}
+repositories {
+    jcenter()
+    mavenCentral()
+}
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src/main/groovy'
+        }
+
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.13.0"
+    }
+}
+
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = GROUP_ID
+            pom.version = VERSION_NAME
+            pom.artifactId = ARTIFACT_ID
+            repository (url : uri('../release'))
+        }
+    }
+}

@@ -1,0 +1,3 @@
+include ':PublishPlugin'
+include ':app'
+rootProject.name = "PublishAppPlugin"
