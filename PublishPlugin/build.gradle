@@ -6,7 +6,7 @@ apply plugin: "maven-publish"
 
 def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
-def ARTIFACT_ID = "com.j1ang.plugin.publishApp"
+def ARTIFACT_ID = "publishApp"
 def VERSION_NAME = "0.0.1"
 
 
