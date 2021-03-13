@@ -2,17 +2,16 @@
 buildscript {
     ext.kotlin_version = "1.4.20"
     repositories {
-        google()
-        jcenter()
         maven {
-            url uri('./release')
+           url "http://www.941103.xyz:7777/artifactory/home/"
         }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.21.0"
-      //  classpath 'com.j1ang.plugin:publishApp:0.0.1'
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.10"
+        classpath 'com.j1ang.plugin:publishApp:0.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -20,11 +19,10 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
         maven {
-            url uri('./release')
+            url "http://www.941103.xyz:7777/artifactory/home/"
         }
+
     }
 }
 
