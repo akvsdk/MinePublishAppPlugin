@@ -50,3 +50,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
+pgyerInfo {
+    pgyerKey = "219c567ae0f0c0a5921c6f1103a49233"
+    buildInstallType = "2"
+    buildUpdateDescription = "hahahahaha"
+    buildPassword = "66315579"
+}

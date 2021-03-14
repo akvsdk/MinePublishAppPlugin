@@ -17,11 +17,11 @@ class PgyerInfoExtension {
      */
     Integer buildInstallType
 
-    Integer buildUpdateDescription
+    String buildUpdateDescription
     /**
      *(选填)  配合 buildInstallType =2 使用
      */
-    Integer buildPassword
+    String buildPassword
 
 
     PgyerInfoExtension() {

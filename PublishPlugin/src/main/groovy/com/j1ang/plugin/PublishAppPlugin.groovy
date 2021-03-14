@@ -9,7 +9,7 @@ class PublishAppPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create("publishAppInfo", PublishAppInfoExtension.class)
         project.extensions.create("pgyerInfo", PgyerInfoExtension.class)
-        project.tasks.create("publishApp", PgyerUploadTask.class)
-
+        def userTask = project.tasks.create("publishApp", PgyerUploadTask.class)
+        userTask.setGroup("hopemobi")
     }
 }
