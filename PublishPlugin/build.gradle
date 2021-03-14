@@ -6,7 +6,7 @@ apply plugin: "com.gradle.plugin-publish"
 def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
 def ARTIFACT_ID = "publishApp"
-def VERSION_NAME = "0.0.1"
+def VERSION_NAME = "0.0.2"
 
 dependencies {
     implementation gradleApi()

@@ -11,7 +11,7 @@ class PgyerUploadTask extends DefaultTask {
 
     PgyerUploadTask() {
         description = 'publish your app into pgyer'
-        //   dependsOn("build")
+        dependsOn("assembleDebug")
     }
 
     @TaskAction
@@ -20,22 +20,26 @@ class PgyerUploadTask extends DefaultTask {
         def apkPath = project.fileTree("${project.buildDir}/outputs/apk/debug/").find {
             return it.name.endsWith(".apk")
         }
+        if (apkPath == null){
+            print("文件目录异常,请检查上传文件")
+            return
+        }
         def inputPath = project.extensions.pgyerInfo.inputPath
         def pgyerKey = project.extensions.pgyerInfo.pgyerKey
         def buildInstallType = project.extensions.pgyerInfo.buildInstallType
         def buildUpdateDescription = project.extensions.pgyerInfo.buildUpdateDescription
         def buildPassword = project.extensions.pgyerInfo.buildPassword
-       print(getGitLog())
+//       print(getGitLog())
 
-//        project.exec {
-//            commandLine 'curl'
-//            args '-k', apiUrl,
-//                    '-F', "_api_key=${pgyerKey}",
-//                    '-F', "file=@${apkPath}",
-//                    '-F', "buildInstallType=${buildInstallType}",
-//                    '-F', "buildPassword=${buildPassword}",
-//                    '-F', "buildUpdateDescription=${buildUpdateDescription}"
-//       }
+        project.exec {
+            commandLine 'curl'
+            args '-k', apiUrl,
+                    '-F', "_api_key=${pgyerKey}",
+                    '-F', "file=@${apkPath}",
+                    '-F', "buildInstallType=${buildInstallType}",
+                    '-F', "buildPassword=${buildPassword}",
+                    '-F', "buildUpdateDescription=${buildUpdateDescription}"
+       }
 
 
     }
