@@ -46,31 +46,31 @@ jar {
 }
 
 
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: MAVEN_LOCAL_PATH+"/local/") {
-//                authentication(userName: "admin", password: "Qq66351579")
-//                pom.groupId = GROUP_ID
-//                pom.artifactId = ARTIFACT_ID
-//                pom.version = VERSION_NAME
-//            }
-//        }
-//    }
-//}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: MAVEN_LOCAL_PATH+"/local/") {
+                authentication(userName: "admin", password: "Qq66351579")
+                pom.groupId = GROUP_ID
+                pom.artifactId = ARTIFACT_ID
+                pom.version = VERSION_NAME
+            }
+        }
+    }
+}
 
 task uploadToLocalMavenTask(type: Delete, group: "upload") {
     dependsOn uploadArchives
     delete project.buildDir
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.groupId = GROUP_ID
-            pom.version = VERSION_NAME
-            pom.artifactId = ARTIFACT_ID
-            repository (url : uri('../release'))
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            pom.groupId = GROUP_ID
+//            pom.version = VERSION_NAME
+//            pom.artifactId = ARTIFACT_ID
+//            repository (url : uri('../release'))
+//        }
+//    }
+//}
