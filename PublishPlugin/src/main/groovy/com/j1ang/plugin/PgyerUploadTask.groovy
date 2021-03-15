@@ -16,7 +16,7 @@ class PgyerUploadTask extends DefaultTask {
     PgyerUploadTask() {
         description = 'publish your app into pgyer'
         group = 'hopemobi'
-        //    dependsOn("assembleDebug")
+        dependsOn("assembleDebug")
     }
 
     @TaskAction
@@ -34,7 +34,6 @@ class PgyerUploadTask extends DefaultTask {
         def buildInstallType = project.extensions.pgyerInfo.buildInstallType
         def buildUpdateDescription = project.extensions.pgyerInfo.buildUpdateDescription
         def buildPassword = project.extensions.pgyerInfo.buildPassword
-        println(buildInstallType)
         // project.extensions.pgyerInfo.inputPath = apkPath
         PgyerInfoExtension info = new PgyerInfoExtension()
         info.buildPassword = buildPassword
@@ -45,9 +44,7 @@ class PgyerUploadTask extends DefaultTask {
         List<PgyerInfoExtension> list = new ArrayList<PgyerInfoExtension>()
         list.add(info)
         def jsonMap = HttpUtils.uploadFile(apiUrl, list)
-        println(jsonMap)
         print(getGitLog())
-
     }
 
 

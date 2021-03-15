@@ -64,10 +64,12 @@ workWxbot {
     type = 2
     webhook = "e19a73ae-e586-4cf4-b13f-9fffedb006ef"
     content = """
-#### hello
-> 普通
+#### ${rootProject.displayName}
+> 测试服务器
 [这是一个链接](http://www.4399.com)
-- 2
+- 新增 xxxx
+- 修复 xxxx
+- 重构 xxxxxx
 <font color="warning">发现128个BUG</font>
 """
 

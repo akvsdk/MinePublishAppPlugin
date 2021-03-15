@@ -13,12 +13,12 @@ class SendMsgToWechatTask extends DefaultTask {
 
     SendMsgToWechatTask() {
         description = 'send messgae  to wechatbot'
-        //    dependsOn("publishApp")
+        group = 'hopemobi'
+        dependsOn("publishApp")
     }
 
     @TaskAction
     void doAction() {
-
 
         def webhook = project.extensions.workWxbot.webhook
         def botUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${webhook}&debug=1"
