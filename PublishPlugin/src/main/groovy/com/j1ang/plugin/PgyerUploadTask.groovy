@@ -1,8 +1,12 @@
 package com.j1ang.plugin
 
+
 import org.gradle.api.DefaultTask
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskAction
+import org.json.JSONObject
+
+import java.util.concurrent.TimeUnit
 
 /**
  * 与自定义PLugin进行参数传递
@@ -11,7 +15,8 @@ class PgyerUploadTask extends DefaultTask {
 
     PgyerUploadTask() {
         description = 'publish your app into pgyer'
-        dependsOn("assembleDebug")
+        group = 'hopemobi'
+        //    dependsOn("assembleDebug")
     }
 
     @TaskAction
@@ -20,7 +25,7 @@ class PgyerUploadTask extends DefaultTask {
         def apkPath = project.fileTree("${project.buildDir}/outputs/apk/debug/").find {
             return it.name.endsWith(".apk")
         }
-        if (apkPath == null){
+        if (apkPath == null) {
             print("文件目录异常,请检查上传文件")
             return
         }
@@ -29,18 +34,19 @@ class PgyerUploadTask extends DefaultTask {
         def buildInstallType = project.extensions.pgyerInfo.buildInstallType
         def buildUpdateDescription = project.extensions.pgyerInfo.buildUpdateDescription
         def buildPassword = project.extensions.pgyerInfo.buildPassword
-//       print(getGitLog())
-
-        project.exec {
-            commandLine 'curl'
-            args '-k', apiUrl,
-                    '-F', "_api_key=${pgyerKey}",
-                    '-F', "file=@${apkPath}",
-                    '-F', "buildInstallType=${buildInstallType}",
-                    '-F', "buildPassword=${buildPassword}",
-                    '-F', "buildUpdateDescription=${buildUpdateDescription}"
-       }
-
+        println(buildInstallType)
+        // project.extensions.pgyerInfo.inputPath = apkPath
+        PgyerInfoExtension info = new PgyerInfoExtension()
+        info.buildPassword = buildPassword
+        info.pgyerKey = pgyerKey
+        info.buildInstallType = buildInstallType
+        info.buildUpdateDescription = buildUpdateDescription
+        info.inputPath = apkPath;
+        List<PgyerInfoExtension> list = new ArrayList<PgyerInfoExtension>()
+        list.add(info)
+        def jsonMap = HttpUtils.uploadFile(apiUrl, list)
+        println(jsonMap)
+        print(getGitLog())
 
     }
 
@@ -69,5 +75,6 @@ class PgyerUploadTask extends DefaultTask {
         }
         return "Debug"
     }
+
 
 }

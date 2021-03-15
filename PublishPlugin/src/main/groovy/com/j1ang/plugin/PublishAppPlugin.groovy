@@ -9,7 +9,9 @@ class PublishAppPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create("publishAppInfo", PublishAppInfoExtension.class)
         project.extensions.create("pgyerInfo", PgyerInfoExtension.class)
-        def userTask = project.tasks.create("publishApp", PgyerUploadTask.class)
-        userTask.setGroup("hopemobi")
+        project.extensions.create("workWxbot", WeChatBotExtension.class)
+        project.tasks.create("publishApp", PgyerUploadTask.class)
+        project.tasks.create("sendBotMsg", SendMsgToWechatTask.class)
+
     }
 }

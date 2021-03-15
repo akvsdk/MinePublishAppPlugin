@@ -6,11 +6,15 @@ apply plugin: "com.gradle.plugin-publish"
 def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
 def ARTIFACT_ID = "publishApp"
-def VERSION_NAME = "0.0.2"
+def VERSION_NAME = "0.0.3"
 
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+    implementation 'org.json:json:20180813'
+    implementation 'commons-lang:commons-lang:2.6'
+    //implementation("com.squareup.okhttp3:okhttp:3.12.1")
+    implementation 'com.mzlion:easy-okhttp:1.1.0'
 }
 
 
@@ -46,31 +50,31 @@ jar {
 }
 
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: MAVEN_LOCAL_PATH+"/local/") {
-                authentication(userName: "admin", password: "Qq66351579")
-                pom.groupId = GROUP_ID
-                pom.artifactId = ARTIFACT_ID
-                pom.version = VERSION_NAME
-            }
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: MAVEN_LOCAL_PATH+"/local/") {
+//                authentication(userName: "admin", password: "Qq66351579")
+//                pom.groupId = GROUP_ID
+//                pom.artifactId = ARTIFACT_ID
+//                pom.version = VERSION_NAME
+//            }
+//        }
+//    }
+//}
 
 task uploadToLocalMavenTask(type: Delete, group: "upload") {
     dependsOn uploadArchives
     delete project.buildDir
 }
 
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            pom.groupId = GROUP_ID
-//            pom.version = VERSION_NAME
-//            pom.artifactId = ARTIFACT_ID
-//            repository (url : uri('../release'))
-//        }
-//    }
-//}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = GROUP_ID
+            pom.version = VERSION_NAME
+            pom.artifactId = ARTIFACT_ID
+            repository (url : uri('../release'))
+        }
+    }
+}

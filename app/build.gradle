@@ -49,11 +49,26 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+//    implementation 'com.j1ang.plugin:publishApp:0.0.2'
 }
 
 pgyerInfo {
     pgyerKey = "219c567ae0f0c0a5921c6f1103a49233"
-    buildInstallType = "2"
+    buildInstallType = 2
     buildUpdateDescription = "hahahahaha"
     buildPassword = "66315579"
+}
+
+workWxbot {
+    type = 2
+    webhook = "e19a73ae-e586-4cf4-b13f-9fffedb006ef"
+    content = """
+#### hello
+> 普通
+[这是一个链接](http://www.4399.com)
+- 2
+<font color="warning">发现128个BUG</font>
+"""
+
 }
