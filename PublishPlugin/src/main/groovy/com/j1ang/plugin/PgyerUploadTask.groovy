@@ -4,9 +4,6 @@ package com.j1ang.plugin
 import org.gradle.api.DefaultTask
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskAction
-import org.json.JSONObject
-
-import java.util.concurrent.TimeUnit
 
 /**
  * 与自定义PLugin进行参数传递
@@ -34,7 +31,6 @@ class PgyerUploadTask extends DefaultTask {
         def buildInstallType = project.extensions.pgyerInfo.buildInstallType
         def buildUpdateDescription = project.extensions.pgyerInfo.buildUpdateDescription
         def buildPassword = project.extensions.pgyerInfo.buildPassword
-        // project.extensions.pgyerInfo.inputPath = apkPath
         PgyerInfoExtension info = new PgyerInfoExtension()
         info.buildPassword = buildPassword
         info.pgyerKey = pgyerKey
@@ -44,7 +40,6 @@ class PgyerUploadTask extends DefaultTask {
         List<PgyerInfoExtension> list = new ArrayList<PgyerInfoExtension>()
         list.add(info)
         def jsonMap = HttpUtils.uploadFile(apiUrl, list)
-        print(getGitLog())
     }
 
 

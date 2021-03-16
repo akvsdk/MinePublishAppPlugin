@@ -1,12 +1,8 @@
 package com.j1ang.plugin
 
-import com.mzlion.core.http.ContentType
 import com.mzlion.easyokhttp.HttpClient
 import groovy.json.JsonSlurper
 
-
-import java.util.concurrent.TimeUnit
-import java.util.logging.Logger
 
 /**
  * 与自定义PLugin进行参数传递
@@ -26,14 +22,12 @@ public class HttpUtils {
             print(responseData)
             def result = new JsonSlurper().parseText(responseData)
             if (result.code == 0) {
-                Logger.getAnonymousLogger()
                 print("""
-                上传成功
-                发布版本: ${result.data.buildVersion}
-                蒲公英地址：${result.data.buildQRCodeURL}
+上传成功
+发布版本: ${result.data.buildVersion}
+蒲公英QR地址：${result.data.buildQRCodeURL}
 """)
             }
-            print(responseData)
         }
 
         return "aaa"

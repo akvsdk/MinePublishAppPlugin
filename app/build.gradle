@@ -46,7 +46,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
-    testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -64,13 +63,29 @@ workWxbot {
     type = 2
     webhook = "e19a73ae-e586-4cf4-b13f-9fffedb006ef"
     content = """
-#### ${rootProject.displayName}
-> 测试服务器
-[这是一个链接](http://www.4399.com)
+#### ${getBuildType()}
 - 新增 xxxx
 - 修复 xxxx
 - 重构 xxxxxx
 <font color="warning">发现128个BUG</font>
+> ${getGitLog()}
 """
 
+}
+
+
+def getGitLog() {
+    return 'git log --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Cblue %s %Cgreen(%cd) %C(bold blue)<%an>%Creset" -5 --date=format:%Y-%m-%d_%H:%M'.execute().text
+}
+
+def getBuildType() {
+    Gradle gradle = getGradle()
+    String args = gradle.getStartParameter().getTaskRequests().toString()
+    println(args)
+    if (args.contains("assembleRelease")) {
+        return "Release"
+    } else if (args.contains("assembleDebug")) {
+        return "Debug"
+    }
+    return "Debug"
 }

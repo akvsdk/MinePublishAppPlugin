@@ -4,6 +4,7 @@ apply plugin: "com.gradle.plugin-publish"
 
 
 def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
+//def MAVEN_LOCAL_PATH = "http://192.168.123.122:8082/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
 def ARTIFACT_ID = "publishApp"
 def VERSION_NAME = "0.0.3"
@@ -12,7 +13,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     //implementation("com.squareup.okhttp3:okhttp:3.12.1")
-    implementation 'com.mzlion:easy-okhttp:1.1.0'
+    implementation 'com.mzlion:easy-okhttp:1.1.4'
 
 }
 

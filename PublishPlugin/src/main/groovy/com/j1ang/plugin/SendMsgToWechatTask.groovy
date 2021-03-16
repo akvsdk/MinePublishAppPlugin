@@ -4,7 +4,8 @@ import groovy.json.JsonBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskAction
-import org.json.JSONObject
+
+import java.awt.datatransfer.DataFlavor
 
 /**
  * 与自定义PLugin进行参数传递
@@ -17,9 +18,9 @@ class SendMsgToWechatTask extends DefaultTask {
         dependsOn("publishApp")
     }
 
+
     @TaskAction
     void doAction() {
-
         def webhook = project.extensions.workWxbot.webhook
         def botUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${webhook}&debug=1"
         def contentText = project.extensions.workWxbot.content
@@ -40,26 +41,10 @@ class SendMsgToWechatTask extends DefaultTask {
                 }
             })
         }
-
-        println(HttpUtils.postMsgJson(botUrl, builder.toString()))
+        print(builder.toPrettyString())
+        HttpUtils.postMsgJson(botUrl, builder.toString())
 
     }
 
-
-    def getGitLog() {
-        return 'git log --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Cblue %s %Cgreen(%cd) %C(bold blue)<%an>%Creset" -5 --date=format:%Y-%m-%d_%H:%M'.execute().text
-    }
-
-    def getBuildType() {
-        Gradle gradle = getGradle()
-        String args = gradle.getStartParameter().getTaskRequests().toString()
-        println(args)
-        if (args.contains("assembleRelease")) {
-            return "Release"
-        } else if (args.contains("assembleDebug")) {
-            return "Debug"
-        }
-        return "Debug"
-    }
 
 }

@@ -32,9 +32,9 @@ buildscript {
 allprojects {
     repositories {
 
-//        maven {
-//            url "http://192.168.123.122:8082/artifactory/home/"
-//        }
+        maven {
+            url "http://192.168.123.122:8082/artifactory/home/"
+        }
 
 //        maven {
 //            url "http://www.941103.xyz:7777/artifactory/home/"
