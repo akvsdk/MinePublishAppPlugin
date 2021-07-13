@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.j1ang.plugin.publishApp'
+//    id 'com.j1ang.plugin.publishApp'
 }
 
 android {
@@ -52,35 +52,35 @@ dependencies {
 //    implementation 'com.j1ang.plugin:publishApp:0.0.2'
 }
 
-pgyerInfo {
-    pgyerKey = "219c567ae0f0c0a5921c6f1103a49233"
-    buildInstallType = 2
-    buildUpdateDescription = "hahahahaha"
-    buildPassword = "66315579"
-}
-
-workWxbot {
-    type = 2
-    webhook = "e19a73ae-e586-4cf4-b13f-9fffedb006ef"
-    content = """
-#### ${getBuildType()}
-- 新增 xxxx
-- 修复 xxxx
-- 重构 xxxxxx
-<font color="warning">发现128个BUG</font>
-> ${getGitLog()}
-"""
-
-}
-
-dexRebuild {
-    rebuildToolPath = 'D:/SdkRebuildTools/'
-    off = 128
-    dexName = '\\classes2.dex'
-    lastName = 'bin_dex.1'
-    clzName = 'UnZipMainrRx'
-    mappingPath = "${project.buildDir}/proguardMapping.txt"
-}
+//pgyerInfo {
+//    pgyerKey = "219c567ae0f0c0a5921c6f1103a49233"
+//    buildInstallType = 2
+//    buildUpdateDescription = "hahahahaha"
+//    buildPassword = "66315579"
+//}
+//
+//workWxbot {
+//    type = 2
+//    webhook = "e19a73ae-e586-4cf4-b13f-9fffedb006ef"
+//    content = """
+//#### ${getBuildType()}
+//- 新增 xxxx
+//- 修复 xxxx
+//- 重构 xxxxxx
+//<font color="warning">发现128个BUG</font>
+//> ${getGitLog()}
+//"""
+//
+//}
+//
+//dexRebuild {
+//    rebuildToolPath = 'D:/SdkRebuildTools/'
+//    off = 128
+//    dexName = '\\classes2.dex'
+//    lastName = 'bin_dex.1'
+//    clzName = 'UnZipMainrRx'
+//    mappingPath = "${project.buildDir}/proguardMapping.txt"
+//}
 
 
 def getGitLog() {

@@ -7,7 +7,7 @@ def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
 //def MAVEN_LOCAL_PATH = "http://192.168.123.122:8082/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
 def ARTIFACT_ID = "publishApp"
-def VERSION_NAME = "0.0.4"
+def VERSION_NAME = "0.0.5"
 
 dependencies {
     implementation gradleApi()
@@ -19,12 +19,15 @@ dependencies {
 
 
 pluginBundle {
+    website = 'https://github.com/akvsdk/MinePublishAppPlugin'
+    vcsUrl = 'https://github.com/akvsdk/MinePublishAppPlugin.git'
+    description = "构建加密的dex"
+    tags = ['Android', 'Gradle', 'plugin','dex']
+    version = "0.0.4"
     plugins {
         PublishAppPlugin {
             id = GROUP_ID
             displayName = ARTIFACT_ID
-            description = "The fat-aar plugin that can be used under android plugin 3.0.1 and gradle wrapper 4.4."
-            version = VERSION_NAME
         }
     }
 }
@@ -39,6 +42,14 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives sourcesJar
 }
+
+
+// 打包文档jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
 
 jar {
     manifest {
