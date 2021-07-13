@@ -20,11 +20,46 @@ class ReBuildTask extends DefaultTask {
 
     @TaskAction
     void doAction() {
+        def log = project.logger
+        log.error "========================";
+        log.error "生成加密Dex .... ";
+        log.error "========================";
+
         def apkPath = project.fileTree("${project.buildDir}/outputs/apk/release/").find {
             return it.name.endsWith(".apk")
         }
         if (apkPath == null) {
-            print("文件目录异常,请检查上传文件")
+            log.error "apk目录异常,请检查Release包";
+            return
+        }
+        def rebuildToolPath = project.extensions.dexRebuild.rebuildToolPath
+        def dexName = project.extensions.dexRebuild.dexName
+        def off = project.extensions.dexRebuild.off
+        def lastName = project.extensions.dexRebuild.lastName
+        def mappingPath = project.extensions.dexRebuild.mappingPath
+        def clzName = project.extensions.dexRebuild.clzName
+        if (null == mappingPath) {
+            log.error "apk目录异常,请检查Release包"
+            return
+        }
+        if (null == rebuildToolPath) {
+            log.error "工具包不能为空"
+            return
+        }
+        if (null == dexName) {
+            log.error "需处理的dex不能为空"
+            return
+        }
+        if (null == off) {
+            log.error "加密偏移量不能为空"
+            return
+        }
+        if (null == mappingPath) {
+            log.error "mapping 不能为空"
+            return
+        }
+        if (null == clzName) {
+            log.error "混淆类名不能为空"
             return
         }
         // 1. 解压apk 拿到class2.dex
@@ -35,22 +70,23 @@ class ReBuildTask extends DefaultTask {
         ZipUtil.unzip(apkPath, apkUnzipFile)
         // 2.拿到 apk 中解压出来的 classes2.jar 文件
 //        def toolsDir = project.extensions.dexRebuild.rebuildToolPath
-        def baksmali = "D:/SdkRebuildTools/baksmali-2.4.0.jar"
-        def smali = "D:/SdkRebuildTools/smali-2.4.0.jar"
-        def dexPath = "${project.buildDir}/outputs/apk/release/bin_beat.1"
-        def dexPath2 = "${project.buildDir}/outputs/apk/release/bin_beat.1.1"
+        def baksmali = "${rebuildToolPath}/baksmali-2.4.0.jar"
+        def smali = "${rebuildToolPath}/smali-2.4.0.jar"
+        def dexPath = "${project.buildDir}/outputs/apk/release/${lastName}"
+        def dexPath2 = "${project.buildDir}/outputs/apk/release/${lastName}.1"
+
         // 3. 使用工具,处理apk
-        def cmd = "java -jar ${baksmali} d ${apkUnzipFile}\\classes2.dex -o ${romDir}"
+        def cmd = "java -jar ${baksmali} d ${apkUnzipFile}${dexName} -o ${romDir}"
         cmd.execute().waitForProcessOutput(System.out, System.err)
 //        execCmd(cmd)
         // 4. 截取mapping 字符串
 
-        def mapPath = getClzPath()
+        def mapPath = getClzPath(clzName,mappingPath)
 
         def smaliFile = mapPath.split("/")
 
         if (smaliFile.size() < 1) {
-            print("获取混淆文件异常,请检查")
+            log.error "获取混淆文件异常,请检查";
             return
         }
         //5. 获取需要生成.smali
@@ -61,18 +97,19 @@ class ReBuildTask extends DefaultTask {
         //6. smali 转dex
         cmd = "java -jar ${smali} a ${newDir} -o ${dexPath2}"
         cmd.execute().waitForProcessOutput(System.out, System.err)
+
         FileUtil.del(romDir)
         FileUtil.del(newDir)
         FileUtil.del(apkUnzipFile)
 
         //7.生成随机字节破坏dex完整
         Random rd = new Random()
-        byte[] arr = new byte[256]
+        byte[] arr = new byte[1024]
         rd.nextBytes(arr)
         System.out.println(arr)
         def writer = new FileWriter(dexPath)
         def reader = new FileReader(dexPath2)
-        writer.append(arr, 0, 128)
+        writer.append(arr, 0, off)
         def lastFile = writer.append(reader.readBytes(), 0, reader.readBytes().length)
         println("dex生成成功,位于${lastFile.absolutePath}")
     }
@@ -86,12 +123,12 @@ class ReBuildTask extends DefaultTask {
 
     }
 
-    String getClzPath() {
-        FileReader fileReader = new FileReader("${project.buildDir}/proguardMapping.txt");
+    String getClzPath(String clzZZ,String path) {
+        FileReader fileReader = new FileReader(path);
         def mapping = fileReader.readLines()
         def clzName
         mapping.each {
-            if (it.contains('UnZipMainrRx')) {
+            if (it.contains(clzZZ)) {
                 clzName = it
             }
         }

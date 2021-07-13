@@ -73,6 +73,15 @@ workWxbot {
 
 }
 
+dexRebuild {
+    rebuildToolPath = 'D:/SdkRebuildTools/'
+    off = 128
+    dexName = '\\classes2.dex'
+    lastName = 'bin_dex.1'
+    clzName = 'UnZipMainrRx'
+    mappingPath = "${project.buildDir}/proguardMapping.txt"
+}
+
 
 def getGitLog() {
     return 'git log --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Cblue %s %Cgreen(%cd) %C(bold blue)<%an>%Creset" -5 --date=format:%Y-%m-%d_%H:%M'.execute().text
