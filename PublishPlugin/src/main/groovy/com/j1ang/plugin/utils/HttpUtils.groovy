@@ -1,5 +1,6 @@
-package com.j1ang.plugin
+package com.j1ang.plugin.utils
 
+import com.j1ang.plugin.extension.PgyerInfoExtension
 import com.mzlion.easyokhttp.HttpClient
 import groovy.json.JsonSlurper
 

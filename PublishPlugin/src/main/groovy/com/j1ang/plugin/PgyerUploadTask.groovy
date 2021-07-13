@@ -1,6 +1,7 @@
 package com.j1ang.plugin
 
-
+import com.j1ang.plugin.extension.PgyerInfoExtension
+import com.j1ang.plugin.utils.HttpUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskAction

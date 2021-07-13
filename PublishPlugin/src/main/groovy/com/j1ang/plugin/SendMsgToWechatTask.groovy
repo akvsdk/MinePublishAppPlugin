@@ -1,11 +1,9 @@
 package com.j1ang.plugin
 
+import com.j1ang.plugin.utils.HttpUtils
 import groovy.json.JsonBuilder
 import org.gradle.api.DefaultTask
-import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskAction
-
-import java.awt.datatransfer.DataFlavor
 
 /**
  * 与自定义PLugin进行参数传递

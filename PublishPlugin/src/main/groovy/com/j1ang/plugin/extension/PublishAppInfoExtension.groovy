@@ -1,4 +1,4 @@
-package com.j1ang.plugin
+package com.j1ang.plugin.extension
 /**
  * 与自定义PLugin进行参数传递
  */
