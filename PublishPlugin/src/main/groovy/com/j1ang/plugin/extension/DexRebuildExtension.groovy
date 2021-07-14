@@ -34,6 +34,11 @@ class DexRebuildExtension {
      */
     String clzName
 
+    /**
+     * 目标地址
+     */
+    String destPath
+
     DexRebuildExtension() {
 
     }

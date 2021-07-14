@@ -15,7 +15,7 @@ class ReBuildTask extends DefaultTask {
     ReBuildTask() {
         description = 'rebuild your app dex '
         group = 'hopemobi'
-//        dependsOn("assembleRelease")
+        dependsOn("assembleRelease")
     }
 
     @TaskAction
@@ -38,6 +38,7 @@ class ReBuildTask extends DefaultTask {
         def lastName = project.extensions.dexRebuild.lastName
         def mappingPath = project.extensions.dexRebuild.mappingPath
         def clzName = project.extensions.dexRebuild.clzName
+        def destPath = project.extensions.dexRebuild.destPath
         if (null == mappingPath) {
             log.error "apk目录异常,请检查Release包"
             return
@@ -79,9 +80,11 @@ class ReBuildTask extends DefaultTask {
         def cmd = "java -jar ${baksmali} d ${apkUnzipFile}${dexName} -o ${romDir}"
         cmd.execute().waitForProcessOutput(System.out, System.err)
 //        execCmd(cmd)
+
+
         // 4. 截取mapping 字符串
 
-        def mapPath = getClzPath(clzName,mappingPath)
+        def mapPath = getClzPath(clzName, mappingPath)
 
         def smaliFile = mapPath.split("/")
 
@@ -89,9 +92,9 @@ class ReBuildTask extends DefaultTask {
             log.error "获取混淆文件异常,请检查";
             return
         }
+
         //5. 获取需要生成.smali
         def newDex = newDir.absolutePath + '/' + mapPath
-        print(newDex)
         FileUtil.touch(newDex)
         FileUtil.copy(romDir.absolutePath + '/' + mapPath, newDex, true)
         //6. smali 转dex
@@ -106,12 +109,23 @@ class ReBuildTask extends DefaultTask {
         Random rd = new Random()
         byte[] arr = new byte[1024]
         rd.nextBytes(arr)
-        System.out.println(arr)
         def writer = new FileWriter(dexPath)
         def reader = new FileReader(dexPath2)
         writer.append(arr, 0, off)
         def lastFile = writer.append(reader.readBytes(), 0, reader.readBytes().length)
-        println("dex生成成功,位于${lastFile.absolutePath}")
+        println("dex生成成功 \n ${lastFile.absolutePath}")
+
+
+        //8.移动覆盖到指定路径
+
+        if (null == destPath) {
+            log.error "destpath 为空,不移动文件";
+            return
+        }
+
+        File destfile = new File(destPath)
+        FileUtil.copy(lastFile, destfile, true)
+
     }
 
 
@@ -123,7 +137,7 @@ class ReBuildTask extends DefaultTask {
 
     }
 
-    String getClzPath(String clzZZ,String path) {
+    String getClzPath(String clzZZ, String path) {
         FileReader fileReader = new FileReader(path);
         def mapping = fileReader.readLines()
         def clzName
