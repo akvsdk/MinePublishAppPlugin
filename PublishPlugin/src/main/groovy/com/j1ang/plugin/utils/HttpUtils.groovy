@@ -15,7 +15,7 @@ public class HttpUtils {
 
             HashMap<String, Object> paramMap = new HashMap<>()
 //文件上传只需将参数中的键指定（默认file），值设为文件对象即可，对于使用者来说，文件上传与普通表单提交并无区别
-            paramMap.put("file", new File(apk.inputPath), apk.inputPath)
+            paramMap.put("file", new File(apk.inputPath))
             paramMap.put("_api_key", apk.pgyerKey)
             paramMap.put("buildInstallType", apk.buildInstallType + "")
             paramMap.put("buildPassword", apk.buildPassword)
@@ -42,12 +42,12 @@ public class HttpUtils {
         String responseData = HttpUtil.post(url, json)
 
         def result = new JsonSlurper().parseText(responseData)
-        print(responseData)
+        println(responseData)
         // {"errcode":0,"errmsg":"ok"}
         if (result.errcode == 0) {
-            print("消息发送成功")
+            println("消息发送成功")
         } else {
-            print("消息发送失败")
+            println("消息发送失败")
         }
         return "bbb"
     }

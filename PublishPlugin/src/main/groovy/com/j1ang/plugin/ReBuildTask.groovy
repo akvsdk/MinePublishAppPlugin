@@ -22,7 +22,9 @@ class ReBuildTask extends DefaultTask {
     void doAction() {
         def log = project.logger
         log.error "========================";
-        log.error "生成加密Dex .... ";
+        log.error """生成加密Dex ....  
+请先检查加密文件类是否正常
+"""
         log.error "========================";
 
         def apkPath = project.fileTree("${project.buildDir}/outputs/apk/release/").find {
@@ -123,7 +125,7 @@ class ReBuildTask extends DefaultTask {
             return
         }
 
-        File destfile = new File(destPath)
+        File destfile = new File(destPath + "/" + lastName)
         FileUtil.copy(lastFile, destfile, true)
 
     }

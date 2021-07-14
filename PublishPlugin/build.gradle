@@ -7,7 +7,7 @@ def MAVEN_LOCAL_PATH = "http://www.941103.xyz:7777/artifactory"
 //def MAVEN_LOCAL_PATH = "http://192.168.123.122:8082/artifactory"
 def GROUP_ID = "com.j1ang.plugin"
 def ARTIFACT_ID = "publishApp"
-def VERSION_NAME = "0.0.6"
+def VERSION_NAME = "0.0.7"
 
 dependencies {
     implementation gradleApi()
@@ -22,7 +22,7 @@ pluginBundle {
     vcsUrl = 'https://github.com/akvsdk/MinePublishAppPlugin.git'
     description = "构建加密的dex"
     tags = ['Android', 'Gradle', 'plugin','dex']
-    version = "0.0.4"
+    version = VERSION_NAME
     plugins {
         PublishAppPlugin {
             id = GROUP_ID
