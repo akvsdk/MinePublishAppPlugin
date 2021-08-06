@@ -91,7 +91,7 @@ class ReBuildTask extends DefaultTask {
         def smaliFile = mapPath.split("/")
 
         if (smaliFile.size() < 1) {
-            log.error "获取混淆文件异常,请检查";
+            log.error "获取混淆文件异常,请检查"
             return
         }
 
@@ -144,7 +144,7 @@ class ReBuildTask extends DefaultTask {
         def mapping = fileReader.readLines()
         def clzName
         mapping.each {
-            if (it.contains(clzZZ)) {
+            if (it.contains(clzZZ) && !it.contains("\$")) {
                 clzName = it
             }
         }
@@ -163,6 +163,8 @@ class ReBuildTask extends DefaultTask {
         println(aa)
         return aa
     }
+
+
 
 
 }
